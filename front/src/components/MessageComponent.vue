@@ -1,7 +1,7 @@
 <template>
   <q-card flat class="q-pa-md">
     <q-card-section>
-      <span v-html="'Entrada de Mensagem'" />
+      <span class="text-bold" v-html="'Entrada de Mensagem'" />
       <q-input
         v-model="currentMessage"
         dense
@@ -11,12 +11,12 @@
     </q-card-section>
     <div class="row full-width">
       <q-card-section v-if="currentMessage" class="col-5">
-        <span v-html="'Mensagem Original'" />
+        <span class="text-bold" v-html="'Mensagem Original'" />
         <p>{{ originalMessageBinary }}</p>
       </q-card-section>
       <q-separator vertical />
       <q-card-section v-if="currentMessage" class="col-5">
-        <span v-html="'Mensagem Criptografada'" />
+        <span class="text-bold" v-html="'Mensagem Criptografada'" />
         <p>{{ encryptedMessageBinary }}</p>
       </q-card-section>
     </div>
