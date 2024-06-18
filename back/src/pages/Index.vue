@@ -1,35 +1,31 @@
 <template>
   <q-page class="q-pa-md">
     <q-tabs v-model="activeTab" no-caps class="text-grey" shrink>
-      <q-tab name="message" label="Mensagem" />
       <q-tab name="graph" label="Gráfico" />
+      <q-tab name="receiver" label="Receptor" />
     </q-tabs>
 
     <q-separator />
 
     <q-tab-panels v-model="activeTab" animated>
-      <q-tab-panel name="message">
-        <MessageSender
-          :message="message"
-          @message-updated="updateMessage"
-          @encrypted-message-updated="updateEncodedMessage"
-        />
-      </q-tab-panel>
       <q-tab-panel name="graph">
         <WaveformGraph :encodedMessage="encodedMessage" />
+      </q-tab-panel>
+      <q-tab-panel name="receiver">
+        <MessageReceiver/>
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
 </template>
 
 <script>
-import MessageSender from '../components/MessageSender.vue';
 import WaveformGraph from '../components/WaveformGraph.vue';
+import MessageReceiver from '../components/MessageReceiver.vue';
 
 export default {
   components: {
-    MessageSender,
     WaveformGraph,
+    MessageReceiver,
   },
   data() {
     return {
