@@ -2,7 +2,9 @@
   <q-card class="q-pa-md">
     <q-card-section>
       <h2>Gráfico de Forma de Onda</h2>
-      <canvas ref="canvas" width="1500" height="200"></canvas>
+      <div class="container">
+        <canvas ref="canvas" width="5000" height="200"></canvas>
+      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -25,20 +27,24 @@ export default {
       ctx.reset();
       const binaryArray = this.encodedMessage.split(' ');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      console.debug(binaryArray, 'socorro');
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      let x;
-      let y;
+      let x = 0;
+      let y = 0;
+      let lastBit = 0;
       binaryArray.forEach((byte, byteIndex) => {
         byte.split('').forEach((bit, bitIndex) => {
-          if (bitIndex > 1 && bit !== byte[bitIndex - 1]) {
-            y = y === (canvas.height / 2) ? 0 : (canvas.height / 2);
+          if (byteIndex === 0 && bitIndex === 0 && bit === '0') {
+            x -= 10;
+          }
+          if (bit !== lastBit) {
+            y = y === 0 ? (canvas.height / 2) : 0;
             ctx.lineTo(x, y);
           }
-          y = bit === '1' ? (canvas.height / 2) : 0;
-          x = (byteIndex * 16 + bitIndex) * 10;
+          y = bit === '1' ? 0 : (canvas.height / 2);
+          x = (byteIndex * 16 + bitIndex + 1) * 10;
           ctx.lineTo(x, y);
+          lastBit = bit;
         });
       });
 
@@ -47,3 +53,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .container {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .canvas {
+    display: block;
+  }
+</style>

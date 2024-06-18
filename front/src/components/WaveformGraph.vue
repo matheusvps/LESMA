@@ -20,7 +20,6 @@ export default {
   },
   methods: {
     drawWaveform() {
-      console.debug('entrei draw');
       const { canvas } = this.$refs;
       const ctx = canvas.getContext('2d');
 
@@ -31,17 +30,22 @@ export default {
       ctx.beginPath();
       // ctx.moveTo(0, canvas.height / 2);
       ctx.moveTo(0, 0);
-      let x;
-      let y;
+      let x = 0;
+      let y = 0;
+      let lastBit = 0;
       binaryArray.forEach((byte, byteIndex) => {
         byte.split('').forEach((bit, bitIndex) => {
-          if (bit !== byte[bitIndex - 1]) {
-            y = y === (canvas.height / 2) ? 0 : (canvas.height / 2);
+          if (byteIndex === 0 && bitIndex === 0 && bit === '0') {
+            x -= 10;
+          }
+          if (bit !== lastBit) {
+            y = y === 0 ? (canvas.height / 2) : 0;
             ctx.lineTo(x, y);
           }
-          y = bit === '1' ? (canvas.height / 2) : 0;
-          x = (byteIndex * 16 + bitIndex) * 10;
+          y = bit === '1' ? 0 : (canvas.height / 2);
+          x = (byteIndex * 16 + bitIndex + 1) * 10;
           ctx.lineTo(x, y);
+          lastBit = bit;
         });
       });
 

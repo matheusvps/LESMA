@@ -7,7 +7,6 @@
         dense
         label="Mensagem"
         @input="updateMessage"
-        :disable="isSent"
       />
     </q-card-section>
     <div class="row full-width">
@@ -25,14 +24,7 @@
       <q-btn
         label="Enviar"
         @click="sendMessage"
-        :disable="isSent"
         color="primary"
-      />
-      <q-btn
-        label="Reiniciar"
-        @click="resetMessage"
-        v-if="isSent"
-        color="negative"
       />
     </q-card-actions>
   </q-card>
@@ -49,7 +41,6 @@ export default {
     return {
       currentMessage: this.message || '',
       encryptionKey: 'chave-secreta',
-      isSent: false,
     };
   },
   watch: {
@@ -63,7 +54,7 @@ export default {
       return this.toBinary(this.currentMessage);
     },
     encryptedMessage() {
-      return CryptoJS.AES.encrypt(this.currentMessage, this.encryptionKey).toString();
+      return CryptoJS.DES.encrypt(this.currentMessage, this.encryptionKey).toString();
     },
     encryptedMessageBinary() {
       return this.toBinary(this.encryptedMessage);
@@ -84,13 +75,11 @@ export default {
         .join(' ');
     },
     async sendMessage() {
-      this.isSent = true;
       const encodedMessage = this.manchesterCode(this.encryptedMessageBinary);
       await this.sendMessageToServer(encodedMessage);
     },
     resetMessage() {
       this.currentMessage = '';
-      this.isSent = false;
       this.$emit('message-updated', this.currentMessage);
       this.$emit('encrypted-message-updated', '');
     },

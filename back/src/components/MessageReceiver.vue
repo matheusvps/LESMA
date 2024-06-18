@@ -4,7 +4,7 @@
       <span class="text-bold">Mensagem Recebida</span>
       <p>{{ receivedMessage }}</p>
     </q-card-section>
-    <q-card-section>
+    <q-card-section class="container">
       <span class="text-bold">Mensagem Decodificada</span>
       <p>{{ decodedMessageBinary }}</p>
     </q-card-section>
@@ -13,7 +13,7 @@
       <p>{{ decryptedMessage }}</p>
     </q-card-section>
     <q-card-section>
-      <WaveformGraph :encodedMessage="receivedMessage" />
+      <WaveformGraph :encodedMessage="decodedMessageBinary" />
     </q-card-section>
   </q-card>
 </template>
@@ -82,9 +82,16 @@ export default {
         .join('');
     },
     decryptMessage(encryptedStr) {
-      const bytes = CryptoJS.AES.decrypt(encryptedStr, this.decryptionKey);
+      const bytes = CryptoJS.DES.decrypt(encryptedStr, this.decryptionKey);
       return bytes.toString(CryptoJS.enc.Utf8);
     },
   },
 };
 </script>
+
+<style scoped>
+  .container {
+    max-width: 100%;
+    word-wrap: break-word;
+}
+</style>

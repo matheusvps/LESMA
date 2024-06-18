@@ -5,9 +5,7 @@ const EventEmitter = require('events');
 const WebSocket = require('ws');
 
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:8080'
-}));
+app.use(cors());
 
 const port = 5000;
 
@@ -27,7 +25,7 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
   
   messageEmitter.on('newMessage', (message) => {
-    console.log('new message ws', message);
+    // console.log('new message ws', message);
     ws.send(JSON.stringify({ message }));
   });
 
@@ -39,7 +37,7 @@ wss.on('connection', (ws) => {
 app.post('/receive-message', (req, res) => {
   storedMessage = req.body.message;
   res.status(200).json({ status: 'Message received' });
-  console.log('entrei receive socorro', req.body);
+  // console.log('entrei receive socorro', req.body);
   // Emitir evento quando uma nova mensagem é recebida
   messageEmitter.emit('newMessage', storedMessage);
 });
