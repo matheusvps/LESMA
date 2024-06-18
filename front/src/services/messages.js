@@ -19,3 +19,19 @@ export async function sendMessageToServer(message) {
     return null;
   }
 }
+
+function manchesterEncode(bits) {
+  let encoded = '';
+  
+  for (let i = 0; i < bits.length; i++) {
+      if (bits[i] === '0') {
+          encoded += '10';
+      } else if (bits[i] === '1') {
+          encoded += '01';
+      } else {
+          throw new Error("A sequência de bits deve conter apenas '0' e '1'");
+      }
+  }
+  
+  return encoded;
+}

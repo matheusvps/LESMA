@@ -25,17 +25,22 @@ export default {
       const ctx = canvas.getContext('2d');
 
       ctx.reset();
-
       const binaryArray = this.encodedMessage.split(' ');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ctx.beginPath();
-      ctx.moveTo(0, canvas.height / 2);
-
+      // ctx.moveTo(0, canvas.height / 2);
+      ctx.moveTo(0, 0);
+      let x;
+      let y;
       binaryArray.forEach((byte, byteIndex) => {
         byte.split('').forEach((bit, bitIndex) => {
-          const x = (byteIndex * 8 + bitIndex) * 10;
-          const y = bit === '1' ? 50 : 150;
+          if (bit !== byte[bitIndex - 1]) {
+            y = y === (canvas.height / 2) ? 0 : (canvas.height / 2);
+            ctx.lineTo(x, y);
+          }
+          y = bit === '1' ? (canvas.height / 2) : 0;
+          x = (byteIndex * 16 + bitIndex) * 10;
           ctx.lineTo(x, y);
         });
       });
