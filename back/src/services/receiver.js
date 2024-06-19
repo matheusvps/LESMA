@@ -5,7 +5,9 @@ const EventEmitter = require('events');
 const WebSocket = require('ws');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080'
+}));
 
 const port = 5000;
 

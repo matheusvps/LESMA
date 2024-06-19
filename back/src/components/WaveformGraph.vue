@@ -1,7 +1,22 @@
 <template>
   <q-card class="q-pa-md">
     <q-card-section>
-      <h2>Gráfico de Forma de Onda</h2>
+      <!-- <h2 id="title_graph">Forma de Onda</h2> -->
+      <div id="title_graph" class="wave">
+        <span style="--i:1">F</span>
+        <span style="--i:2">o</span>
+        <span style="--i:3">r</span>
+        <span style="--i:4">m</span>
+        <span style="--i:5">a</span>
+        <span style="--i:6">&nbsp;</span>
+        <span style="--i:7">d</span>
+        <span style="--i:8">e</span>
+        <span style="--i:9">&nbsp;</span>
+        <span style="--i:10">O</span>
+        <span style="--i:11">n</span>
+        <span style="--i:12">d</span>
+        <span style="--i:13">a</span>
+      </div>
       <div class="container">
         <canvas ref="canvas" width="5000" height="200"></canvas>
       </div>
@@ -61,5 +76,36 @@ export default {
   }
   .canvas {
     display: block;
+  }
+  #title_graph {
+    text-align: center;
+    color: #162730;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 2px 2px 1px #2c3e50;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 4em;
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+  .wave {
+    position: relative;
+  }
+  .wave:hover span {
+    position: relative;
+    display: inline-block;
+    animation: animate 1s ease-in-out infinite;
+    animation-delay: calc(0.1s * var(--i));
+  }
+  @keyframes animate {
+    0% {
+      transform: translateY(0px);
+    }
+    20% {
+      transform: translateY(-10px);
+    }
+    40%,100% {
+      transform: translateY(0px);
+    }
   }
 </style>
