@@ -29,7 +29,7 @@ export default {
   props: ['encodedMessage'],
   data() {
     return {
-      canvasWidth: 500 
+      canvasWidth: 500,
     };
   },
   watch: {
