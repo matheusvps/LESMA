@@ -5,14 +5,9 @@ const EventEmitter = require('events');
 const WebSocket = require('ws');
 
 const app = express();
-<<<<<<< Updated upstream
-app.use(cors({
-  origin: 'http://localhost:8080'
-=======
 
 app.use(cors({
   origin: '*'
->>>>>>> Stashed changes
 }));
 
 const port = 5000;

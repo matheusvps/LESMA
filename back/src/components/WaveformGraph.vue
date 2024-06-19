@@ -29,7 +29,7 @@ export default {
   props: ['encodedMessage'],
   data() {
     return {
-      canvasWidth: 500 
+      canvasWidth: 500,
     };
   },
   watch: {
@@ -108,7 +108,7 @@ export default {
     position: relative;
     display: inline-block;
     animation: animate 1s ease-in-out infinite;
-    animation-delay: calc(0.1s * var(--i));
+    animation-delay: calc(0.076s * var(--i));
   }
   @keyframes animate {
     0% {
