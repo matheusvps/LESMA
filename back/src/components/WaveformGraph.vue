@@ -45,7 +45,7 @@ export default {
       const binaryArray = this.encodedMessage.split(' ');
       // Calculate the required canvas width based on the encoded message
       const numBits = binaryArray.reduce((sum, byte) => sum + byte.length, 0);
-      this.canvasWidth = (numBits + binaryArray.length * 8) * 10; // Adjusting for spacing and bits
+      this.canvasWidth = (numBits + binaryArray.length * 16) * 10; // Adjusting for spacing and bits
 
       // Ensure the canvas width is updated before drawing
       this.$nextTick(() => {
@@ -95,7 +95,6 @@ export default {
     color: #162730;
     font-family: 'Arial', sans-serif;
     text-shadow: 2px 2px 1px #2c3e50;
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 4em;
     margin-top: 0px;

@@ -46,7 +46,7 @@ export default {
   watch: {
     encryptedMessage() {
       this.$emit('message-updated', this.currentMessage);
-      this.$emit('encrypted-message-updated', this.manchesterCode(this.encryptedMessageBinary));
+      this.$emit('encrypted-message-updated', this.encryptedMessageBinary);
     },
   },
   computed: {
