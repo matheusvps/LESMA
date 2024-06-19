@@ -18,7 +18,7 @@
         <span style="--i:13">a</span>
       </div>
       <div class="container">
-        <canvas ref="canvas" width="5000" height="200"></canvas>
+        <canvas ref="canvas" :width="canvasWidth" height="200"></canvas>
       </div>
     </q-card-section>
   </q-card>
@@ -27,6 +27,11 @@
 <script>
 export default {
   props: ['encodedMessage'],
+  data() {
+    return {
+      canvasWidth: 500 
+    };
+  },
   watch: {
     encodedMessage() {
       this.drawWaveform();
@@ -37,33 +42,41 @@ export default {
   },
   methods: {
     drawWaveform() {
-      const { canvas } = this.$refs;
-      const ctx = canvas.getContext('2d');
-      ctx.reset();
       const binaryArray = this.encodedMessage.split(' ');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      let x = 0;
-      let y = 0;
-      let lastBit = 0;
-      binaryArray.forEach((byte, byteIndex) => {
-        byte.split('').forEach((bit, bitIndex) => {
-          if (byteIndex === 0 && bitIndex === 0 && bit === '0') {
-            x -= 10;
-          }
-          if (bit !== lastBit) {
-            y = y === 0 ? (canvas.height / 2) : 0;
-            ctx.lineTo(x, y);
-          }
-          y = bit === '1' ? 0 : (canvas.height / 2);
-          x = (byteIndex * 16 + bitIndex + 1) * 10;
-          ctx.lineTo(x, y);
-          lastBit = bit;
-        });
-      });
+      // Calculate the required canvas width based on the encoded message
+      const numBits = binaryArray.reduce((sum, byte) => sum + byte.length, 0);
+      this.canvasWidth = (numBits + binaryArray.length * 8) * 10; // Adjusting for spacing and bits
 
-      ctx.stroke();
+      // Ensure the canvas width is updated before drawing
+      this.$nextTick(() => {
+        const { canvas } = this.$refs;
+        const ctx = canvas.getContext('2d');
+        ctx.reset();
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        let x = 0;
+        let y = 0;
+        let lastBit = 0;
+        binaryArray.forEach((byte, byteIndex) => {
+          byte.split('').forEach((bit, bitIndex) => {
+            if (byteIndex === 0 && bitIndex === 0 && bit === '0') {
+              x -= 10;
+            }
+            if (bit !== lastBit) {
+              y = y === 0 ? (canvas.height / 2) : 0;
+              ctx.lineTo(x, y);
+            }
+            y = bit === '1' ? 0 : (canvas.height / 2);
+            x = (byteIndex * 16 + bitIndex + 1) * 10;
+            ctx.lineTo(x, y);
+            lastBit = bit;
+          });
+        });
+
+        ctx.stroke();
+      });
     },
   },
 };
