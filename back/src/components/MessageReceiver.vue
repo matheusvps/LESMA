@@ -39,18 +39,18 @@ export default {
   },
   methods: {
     setupWebSocket() {
-      const socket = new WebSocket('ws://localhost:5000');
-
+      const host = window.location.hostname;
+      const serverURL = `${host}:5000/`;
+      console.debug('URL Req:', serverURL);
+      const socket = new WebSocket(`ws://${serverURL}`);
       socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
         this.receivedMessage = data.message;
         this.processMessage();
       };
-
       socket.onopen = () => {
         console.log('WebSocket connection established');
       };
-
       socket.onclose = () => {
         console.log('WebSocket connection closed');
       };
