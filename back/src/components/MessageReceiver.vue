@@ -82,7 +82,7 @@ export default {
     },
     decryptMessage(encryptedStr) {
       const bytes = CryptoJS.DES.decrypt(encryptedStr, this.decryptionKey);
-      return bytes.toString(CryptoJS.enc.Utf8);
+      return bytes.toString(CryptoJS.enc.Utf8) === '' ? encryptedStr : bytes.toString(CryptoJS.enc.Utf8);
     },
   },
 };

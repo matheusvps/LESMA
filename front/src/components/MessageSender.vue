@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import CryptoJS from 'crypto-js';
+// import CryptoJS from 'crypto-js';
 
 export default {
   props: {
@@ -54,7 +54,8 @@ export default {
       return this.toBinary(this.currentMessage);
     },
     encryptedMessage() {
-      return CryptoJS.DES.encrypt(this.currentMessage, this.encryptionKey).toString();
+      // return CryptoJS.DES.encrypt(this.currentMessage, this.encryptionKey).toString();
+      return this.currentMessage;
     },
     encryptedMessageBinary() {
       return this.toBinary(this.encryptedMessage);
