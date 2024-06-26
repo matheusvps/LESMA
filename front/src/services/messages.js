@@ -1,6 +1,10 @@
 export async function sendMessageToServer(message) {
   try {
-    const response = await fetch('http://localhost:5000/receive-message', {
+    console.debug('Message:', message);
+    const host = window.location.hostname;
+    const serverURL = `http://${host}:5000/receive-message`;
+    console.debug('URL Req:', serverURL);
+    const response = await fetch(serverURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

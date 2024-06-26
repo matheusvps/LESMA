@@ -67,7 +67,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     
     'prefer-promise-reject-errors': 'off',
-
+    "linebreak-style": 0,
     'vue/multi-word-component-names': 'off',
 
     // allow debugger during development only
