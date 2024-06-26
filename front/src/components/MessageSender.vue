@@ -16,6 +16,11 @@
       </q-card-section>
       <q-separator vertical />
       <q-card-section v-if="currentMessage" class="col-5">
+        <span class="text-bold" v-html="'Mensagem Com Codificação de Linha'" />
+        <p>{{ manchesterCode(encryptedMessageBinary) }}</p>
+      </q-card-section>
+      <q-separator vertical />
+      <q-card-section v-if="currentMessage" class="col-5">
         <span class="text-bold" v-html="'Mensagem Criptografada'" />
         <p>{{ encryptedMessageBinary }}</p>
       </q-card-section>

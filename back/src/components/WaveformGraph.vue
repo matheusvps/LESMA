@@ -41,8 +41,19 @@ export default {
     this.drawWaveform();
   },
   methods: {
+    manchesterCode(binaryStr) {
+      return binaryStr.split(' ')
+        .map((byte) => byte.split('')
+          .map((bit) => (bit === '1' ? '01' : '10'))
+          .join(''))
+        .join(' ');
+    },
+
     drawWaveform() {
-      const binaryArray = this.encodedMessage.split(' ');
+      console.debug(this.encodedMessage, 'o q chega no draw');
+      const manchester = this.manchesterCode(this.encodedMessage);
+      const trimmed = manchester.replace(/\s+/g, '');
+      const binaryArray = trimmed.split(' ');
       // Calculate the required canvas width based on the encoded message
       const numBits = binaryArray.reduce((sum, byte) => sum + byte.length, 0);
       this.canvasWidth = (numBits + binaryArray.length * 16) * 10; // Adjusting for spacing and bits
@@ -61,8 +72,11 @@ export default {
         let lastBit = 0;
         binaryArray.forEach((byte, byteIndex) => {
           byte.split('').forEach((bit, bitIndex) => {
-            if (byteIndex === 0 && bitIndex === 0 && bit === '0') {
+            if (byteIndex === 0 && bitIndex === 0) {
               x -= 10;
+              if (bit === '1') {
+                y = canvas.height;
+              }
             }
             if (bit !== lastBit) {
               y = y === 0 ? (canvas.height / 2) : 0;
