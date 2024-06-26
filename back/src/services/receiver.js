@@ -19,13 +19,12 @@ const messageEmitter = new EventEmitter();
 
 const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
-  console.log('ESTOU RODANDO');
 });
 
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
-  console.log('Client connected');
+  console.log(`Client \x1b[4m\x1b[33m ${ws._socket.remoteAddress.split(':')[3] === undefined ? 'local access' : ws._socket.remoteAddress.split(':')[3]} \x1b[0m connected`);
   
   messageEmitter.on('newMessage', (message) => {
     // console.log('new message ws', message);

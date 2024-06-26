@@ -39,7 +39,9 @@ export default {
   },
   methods: {
     setupWebSocket() {
-      const socket = new WebSocket('ws://localhost:5000');
+      const url = new URL(window.location.href);
+      const ip = url.hostname;
+      const socket = new WebSocket(`ws://${ip}:5000`);
 
       socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
